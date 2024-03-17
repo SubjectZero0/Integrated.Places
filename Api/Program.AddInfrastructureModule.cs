@@ -9,7 +9,8 @@ namespace Api
         {
             var nServiceBusSettings = builder.Configuration.GetSection(nameof(NServiceBusSettings)).Get<NServiceBusSettings>() ?? throw new ArgumentNullException(nameof(NServiceBusSettings));
 
-            InfrastructureModule.AddNServiceBus(builder.Services, nServiceBusSettings.TransportConnectionString, nServiceBusSettings.EndpointName);
+            InfrastructureModule.AddMessageBus(builder.Services, nServiceBusSettings.TransportConnectionString, nServiceBusSettings.EndpointName);
+            InfrastructureModule.AddHangFireJobs(builder.Services);
 
             return builder;
         }

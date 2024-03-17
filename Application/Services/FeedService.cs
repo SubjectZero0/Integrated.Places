@@ -25,7 +25,7 @@ namespace Application.Services
         {
             var placeCoordinates = await _mediator.Send(query);
 
-            return placeCoordinates.Value;
+            return placeCoordinates;
         }
     }
 }
