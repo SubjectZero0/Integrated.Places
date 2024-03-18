@@ -18,7 +18,14 @@ namespace Infrastructure.MessageBus
         {
             foreach (var domainEvent in domainEvents.Value)
             {
-                await _session.Publish(domainEvent);
+                try
+                {
+                    await _session.Publish(domainEvent);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
             }
         }
     }

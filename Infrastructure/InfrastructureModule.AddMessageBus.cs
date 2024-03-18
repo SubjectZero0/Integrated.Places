@@ -1,5 +1,4 @@
 ﻿using Application.MessageBus;
-using Domain;
 using Domain.Aggregates.Coordinates;
 using Infrastructure.MessageBus;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +12,11 @@ namespace Infrastructure
         {
             var endpointConfiguration = new EndpointConfiguration(endpointName);
 
-            endpointConfiguration.Conventions().DefiningEventsAs(type => typeof(DomainEvent).IsAssignableFrom(type));
+            endpointConfiguration.Conventions().DefiningEventsAs(type => type == typeof(CoordinatesAdded));
+            endpointConfiguration.AutoSubscribe();
+
+            endpointConfiguration.UseSerialization<XmlSerializer>();
+            endpointConfiguration.AddDeserializer<XmlSerializer>();
 
             var transport = endpointConfiguration.UseTransport<RabbitMQTransport>();
             transport.ConnectionString(transportConnectionString);
@@ -23,8 +26,6 @@ namespace Infrastructure
             services.AddSingleton<IMessageSession>(endpoint);
 
             services.AddScoped<IEventsHub, EventsHub>();
-
-            //TODO: find a way to correctly setup rabbitmq
 
             return services;
         }

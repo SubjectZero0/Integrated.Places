@@ -39,6 +39,7 @@ namespace Application.Services
             // TODO: search in cache and/or in db when infra is ready
 
             var newPlaceCoordinates = Coordinates.CreateNew(
+                id: Guid.NewGuid(),
                 name: placeCoordinates.Name,
                 longitude: placeCoordinates.Longtitude,
                 latitude: placeCoordinates.Latitude,

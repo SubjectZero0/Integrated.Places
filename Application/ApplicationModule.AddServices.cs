@@ -1,5 +1,5 @@
 ﻿using Application.Decorators;
-using Application.MessageBus.EventHandlers;
+using Application.MessageBus.EventHandlers.Coordinates;
 using Application.Services;
 using Domain.Aggregates.Coordinates;
 using MediatR;

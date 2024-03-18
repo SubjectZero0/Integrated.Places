@@ -4,6 +4,7 @@ namespace Domain.Aggregates.Coordinates
 {
     public sealed class Coordinates : AggregateRoot
     {
+        public Guid Id { get; private set; }
         public string Name { get; private set; }
         public decimal Longtitude { get; private set; }
         public decimal Latitude { get; private set; }
@@ -17,8 +18,9 @@ namespace Domain.Aggregates.Coordinates
             Country = string.Empty;
         }
 
-        private Coordinates(string name, decimal longtitude, decimal latitude, string country) : base()
+        private Coordinates(Guid id, string name, decimal longtitude, decimal latitude, string country)
         {
+            Id = id;
             Name = name;
             Longtitude = longtitude;
             Latitude = latitude;
@@ -27,9 +29,9 @@ namespace Domain.Aggregates.Coordinates
             UpdatedAt = DateTime.UtcNow;
         }
 
-        public static AddCoordinatesModification CreateNew(string name, decimal longitude, decimal latitude, string country)
+        public static AddCoordinatesModification CreateNew(Guid id, string name, decimal longitude, decimal latitude, string country)
         {
-            var coordinates = new Coordinates(name, longitude, latitude, country);
+            var coordinates = new Coordinates(id, name, longitude, latitude, country);
             var domainEvent = new CoordinatesAdded(coordinates);
 
             return new AddCoordinatesModification(coordinates, [domainEvent]);
